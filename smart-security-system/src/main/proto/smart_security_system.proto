@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+// Define the package for the generated code.
+package smart_security_system;
+
+// AccessControlService manages user access to the office.
+service AccessControlService {
+  // RegisterUser registers a new user with the system.
+  rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse);
+  
+  // RevokeAccess revokes access permissions for a user.
+  rpc RevokeAccess (RevokeAccessRequest) returns (RevokeAccessResponse);
+  
+  // GrantAccess grants access permissions to a user.
+  rpc GrantAccess (GrantAccessRequest) returns (GrantAccessResponse);
+}
+
+// MotionDetectionService monitors motion activity in the office premises.
+service MotionDetectionService {
+  // StartMotionDetection starts the motion detection system.
+  rpc StartMotionDetection (StartMotionDetectionRequest) returns (StartMotionDetectionResponse);
+  
+  // StopMotionDetection stops the motion detection system.
+  rpc StopMotionDetection (StopMotionDetectionRequest) returns (StopMotionDetectionResponse);
+  
+  // GetInfo retrieves video metadata recorded by the security system.
+  rpc GetInfo (GetInfoRequest) returns (stream GetInfoResponse);
+}
+
+// IntruderDetectionService detects unauthorized entry or intrusion in the office premises.
+service IntruderDetectionService {
+  // SetIntruderDetection starts the intruder detection system.
+  rpc SetIntruderDetection (SetIntruderDetectionRequest) returns (SetIntruderDetectionResponse);
+  
+  // StopIntruderDetection stops the intruder detection system.
+  rpc StopIntruderDetection (StopIntruderDetectionRequest) returns (StopIntruderDetectionResponse);
+  
+  // ReceiveIntruderAlerts receives intrusion alerts from various sensors and devices.
+  rpc ReceiveIntruderAlerts (stream ReceiveIntruderAlertsRequest) returns (stream ReceiveIntruderAlertsResponse);
+}
+
+// Messages for AccessControlService
+message RegisterUserRequest {
+  string user_name = 1; // User's name
+  string employee_id = 2; // User's employee ID
+}
+
+message RegisterUserResponse {
+  string message = 1; // Confirmation message
+}
+
+message RevokeAccessRequest {
+  string employee_id = 1; // User's employee ID
+}
+
+message RevokeAccessResponse {
+  bool success = 1; // Indicates if the operation was successful
+}
+
+message GrantAccessRequest {
+  string employee_id = 1; // User's employee ID
+}
+
+message GrantAccessResponse {
+  bool success = 1; // Indicates if the operation was successful
+}
+
+// Messages for MotionDetectionService
+message StartMotionDetectionRequest {}
+
+message StartMotionDetectionResponse {
+  string message = 1; // Confirmation message
+}
+
+message StopMotionDetectionRequest {}
+
+message StopMotionDetectionResponse {
+  string message = 1; // Confirmation message
+}
+
+message GetInfoRequest {}
+
+message GetInfoResponse {
+  string date = 1; // Date of the recorded video
+  string time = 2; // Time of the recorded video
+  string object_type = 3; // Type of the detected object
+  string distance = 4; // Distance of the detected object
+}
+
+// Messages for IntruderDetectionService
+message SetIntruderDetectionRequest {}
+
+message SetIntruderDetectionResponse {
+  string message = 1; // Confirmation message
+}
+
+message StopIntruderDetectionRequest {}
+
+message StopIntruderDetectionResponse {
+  string message = 1; // Confirmation message
+}
+
+message ReceiveIntruderAlertsRequest {
+  string sensor_data = 1; // Data from sensors and devices
+}
+
+message ReceiveIntruderAlertsResponse {
+string alert = 1; // Intrusion alert message
+string sensor_name = 2; // Name of the sensor that detected the intrusion
+string time_stamp = 3; // Time when the intrusion was detected
+}
+ 
